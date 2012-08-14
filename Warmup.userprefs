@@ -1,0 +1,18 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Generics\LiveScript.cs">
+    <Files>
+      <File FileName="Assets\Scripts\GroundScript.cs" Line="43" Column="18" />
+      <File FileName="Assets\Scripts\Generics\PlantScript.cs" Line="10" Column="30" />
+      <File FileName="Assets\Scripts\Generics\BasicScript.cs" Line="14" Column="18" />
+      <File FileName="Assets\Scripts\Generics\LiveScript.cs" Line="78" Column="15" />
+      <File FileName="Assets\Scripts\Generics\HerbovoreScript.cs" Line="22" Column="57" />
+      <File FileName="Assets\Scripts\Generics\CarnivoreScript.cs" Line="18" Column="22" />
+      <File FileName="Assets\Scripts\WallScript.cs" Line="16" Column="18" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
