@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class LiveScript : BasicScript {
 	
+	public GameObject[] tags;
+	
 	protected float moveForce = 40f;
 	protected TYPE eats;
 	protected float strenght;
@@ -25,12 +27,22 @@ public class LiveScript : BasicScript {
 	
 	protected new void Start () {
 		base.Start();
-		strenght = Random.Range(2f, 5f);
+		strenght = Random.Range(0.1f, 1f);
+		GameObject tag;
+		if(strenght <= 3){
+			tag = (GameObject)Instantiate(tags[0]);
+		}
+		else{
+			tag = (GameObject)Instantiate(tags[1]);
+		}
+		tag.transform.parent = transform;
 		energy = Random.Range(10f, 50f);
 		hp = Random.Range(8f, 15f);
-		interactionDist = Random.Range(1f, 3f);
+		interactionDist = Random.Range(1f, 2f);
 		enemy = null;
 		type = TYPE.CRITTER | TYPE.MEAT;
+		
+		
 		InvokeRepeating("LookForFood", 0.3f, 1f);
 	}
 	
@@ -44,18 +56,24 @@ public class LiveScript : BasicScript {
 		LookForFood();
 		LookForEnemy();
 		
+		Vector3 escapeDir = - enemyDir.normalized;
+		
 		if(enemyDist < safeDistance && enemy != null){
+			if(target){
+				enemyDir += (targetDir * 2);
+			}
 			if(energy > runCost){
-				Run(-enemyDir);
+				Run(escapeDir);
 			}
 			else{
-				Move(-enemyDir);
+				Move(escapeDir);
 			}
 		}
 		else if(targetDist <= interactionDist && target != null){
 			if(eats == TYPE.HERB){
 				PlantScript plantScript = (PlantScript)target.GetComponent("PlantScript");
 				Eat(plantScript.GetHurt(strenght));
+				GameScript.score += 10;
 			}
 			else if (eats == BasicScript.TYPE.MEAT){
 				HerbovoreScript plantScript = (HerbovoreScript)target.GetComponent("HerbovoreScript");
@@ -70,7 +88,7 @@ public class LiveScript : BasicScript {
 	}
 	
 	
-	public void Eat(float amount){
+	protected void Eat(float amount){
 		energy += amount;
 	}
 	
@@ -79,20 +97,20 @@ public class LiveScript : BasicScript {
 	}
 	
 	
-	public void Move(Vector3 dir){
+	protected void Move(Vector3 dir){
 		if(rigidbody != null){
 			rigidbody.AddForce(dir * moveForce * Time.deltaTime);
 		}
 	}
 	
-	public void Run(Vector3 dir){
+	protected void Run(Vector3 dir){
 		if(rigidbody != null){
 			rigidbody.AddForce(dir * moveForce * 10 * Time.deltaTime);
 			energy -= runCost;
 		}
 	}
 	
-	public void LookForFood(){
+	protected void LookForFood(){
 		target = null;
 		List<GameObject> possibleTargets = new List<GameObject>();
 		if(eats == TYPE.HERB){
@@ -114,17 +132,19 @@ public class LiveScript : BasicScript {
 			RaycastHit hit;
 			
 			if(Physics.Raycast(ray, out hit)){
-				Debug.DrawRay(collider.bounds.center, tmpDir);
-				if(hit.distance < targetDist || target == null){
-					target = obj;
-					targetDist = hit.distance;
-					targetDir = ray.direction;
+				if(hit.collider == obj.collider){
+					Debug.DrawRay(collider.bounds.center, tmpDir);
+					if(hit.distance < targetDist || target == null){
+						target = obj;
+						targetDist = hit.distance;
+						targetDir = ray.direction;
+					}
 				}
 			}
 		}
 	}
 	
-	public void LookForEnemy(){
+	protected void LookForEnemy(){
 		enemy = null;
 		List<GameObject> possibleEnemys = new List<GameObject>();
 		GameObject[] temp = GameObject.FindGameObjectsWithTag("Critter");
@@ -138,14 +158,19 @@ public class LiveScript : BasicScript {
 		}
 		
 		foreach(GameObject en in possibleEnemys){
-			Ray ray = new Ray(collider.bounds.center, en.collider.bounds.center - collider.bounds.center);
+			Vector3 tempDir = en.collider.bounds.center - collider.bounds.center;
+			Ray ray = new Ray(collider.bounds.center, tempDir);
 			RaycastHit hit;
 			
 			if(Physics.Raycast(ray, out hit)){
-				if(enemy == null || enemyDist > hit.distance){
-					enemy = en;
-					enemyDist = hit.distance;
-					enemyDir = ray.direction;
+				if(hit.collider == en.collider){
+					Debug.DrawRay(collider.bounds.center, tempDir);
+					if(enemy == null || enemyDist > hit.distance){
+						enemy = en;
+						enemyDist = hit.distance;
+						enemyDir = ray.direction;
+					}
+				
 				}
 			}
 		}

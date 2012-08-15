@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 public class BasicScript : MonoBehaviour {
-	
+		
 	public enum TYPE {
 		UNKNOWN = 0,
 		HERB = 1,
@@ -31,6 +31,7 @@ public class BasicScript : MonoBehaviour {
 		hp -= dmg;
 		if(hp <= 0){
 			damageTaken -=hp;
+			GameScript.hernivores.Remove(gameObject);
 			Destroy(gameObject);
 		}
 		return damageTaken;

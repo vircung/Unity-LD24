@@ -50,4 +50,9 @@ public class PlantScript : BasicScript {
 		
 		Instantiate(seedInstance, position, Quaternion.identity);
 	}
+	
+	public void OnDestroy(){
+				GameScript.buildPoints ++;
+		//Destroy(gameObject);
+	}
 }
