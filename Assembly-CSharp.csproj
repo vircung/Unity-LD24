@@ -44,10 +44,10 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Envoirment\Game\GameScript.cs" />
      <Compile Include="Assets\Scripts\Envoirment\GroundScript.cs" />
      <Compile Include="Assets\Scripts\Envoirment\WallClickScript.cs" />
      <Compile Include="Assets\Scripts\Envoirment\WallScript.cs" />
-     <Compile Include="Assets\Scripts\Game\GameScript.cs" />
      <Compile Include="Assets\Scripts\Generics\BasicScript.cs" />
      <Compile Include="Assets\Scripts\Generics\CarnivoreScript.cs" />
      <Compile Include="Assets\Scripts\Generics\HerbovoreScript.cs" />
