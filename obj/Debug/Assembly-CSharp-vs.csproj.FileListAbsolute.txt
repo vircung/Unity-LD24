@@ -1,0 +1,8 @@
+E:\code_remote\Unity\LD24\Project\Temp\bin\Debug\Assembly-CSharp.dll
+E:\code_remote\Unity\LD24\Project\Temp\bin\Debug\Assembly-CSharp.pdb
+E:\code_remote\Unity\LD24\Project\Temp\bin\Debug\UnityEditor.dll
+E:\code_remote\Unity\LD24\Project\Temp\bin\Debug\UnityEngine.dll
+E:\code_remote\Unity\LD24\Project\Temp\bin\Debug\nunit.framework.dll
+E:\code_remote\Unity\LD24\Project\obj\Debug\ResolveAssemblyReference.cache
+E:\code_remote\Unity\LD24\Project\obj\Debug\Assembly-CSharp.dll
+E:\code_remote\Unity\LD24\Project\obj\Debug\Assembly-CSharp.pdb

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class WallScript : MonoBehaviour
+public class CameraInputScript : MonoBehaviour
 {
 
     // Use this for initialization
@@ -13,11 +13,5 @@ public class WallScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-    }
-
-    void OnMouseDown()
-    {
-        Destroy(gameObject);
     }
 }
