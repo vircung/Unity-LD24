@@ -12,7 +12,7 @@ public class LiveScript : BasicScript
 
     #region Eating
 
-    protected GameObject target = null;
+    public GameObject target = null;
     protected float targetDist;
     protected Vector3 targetDir;
     protected float searchFoodRatio = 0.4f;

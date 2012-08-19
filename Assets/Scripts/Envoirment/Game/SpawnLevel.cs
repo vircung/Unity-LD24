@@ -9,8 +9,7 @@ public class SpawnLevel : MonoBehaviour
     GameObject westWall;
 
     GameObject ground;
-    
-    GameObject firstPlayer;
+   
 
     void Awake()
     {
@@ -21,7 +20,6 @@ public class SpawnLevel : MonoBehaviour
 
         ground = Resources.Load("Prefabs/Envoirment/Ground") as GameObject;
         
-        firstPlayer = Resources.Load("Prefabs/Actors/Herbivore") as GameObject;
     }
 
     void Start()
@@ -36,8 +34,5 @@ public class SpawnLevel : MonoBehaviour
         Instantiate(westWall, Vector3.zero, Quaternion.identity);
 
         Instantiate(ground, Vector3.zero, Quaternion.identity);
-
-        go = Instantiate(firstPlayer, Vector3.up, Quaternion.identity) as GameObject;
-        myGame.herbovores.Add(go);
     }
 }

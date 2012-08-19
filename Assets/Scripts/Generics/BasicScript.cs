@@ -34,7 +34,7 @@ public class BasicScript : MonoBehaviour
 
     protected void Start()
     {
-        death = Resources.Load("Death Particles") as ParticleSystem;
+        death = Resources.Load("Particles/Death Particles") as ParticleSystem;
         healParticle = null;
         exp = 10;
         currHp = maxHP / 2;
@@ -77,7 +77,6 @@ public class BasicScript : MonoBehaviour
             {
 
                 HerbovoreScript hs = src.GetComponent<HerbovoreScript>();
-                Debug.Log(hs.name);
                 hs.AddExp(exp);
             }
 

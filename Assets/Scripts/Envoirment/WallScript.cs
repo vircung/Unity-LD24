@@ -5,6 +5,7 @@ public class WallScript : MonoBehaviour
 {
     void OnMouseDown()
     {
+        Debug.Log("Wall Click");
         Destroy(gameObject);
     }
 }

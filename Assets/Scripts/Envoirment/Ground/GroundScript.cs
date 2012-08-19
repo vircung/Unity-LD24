@@ -7,7 +7,6 @@ public class GroundScript : MonoBehaviour
 
     GameObject wall = null;
     GameObject player = null;
-    AudioClip carnivoreTeleport = null;
 
     GameObject player_instance = null;
     bool isStarted = false;
@@ -17,7 +16,6 @@ public class GroundScript : MonoBehaviour
         isStarted = false;
         player = Resources.Load("Prefabs/Actors/Herbivore") as GameObject;
         wall = Resources.Load("Prefabs/Envoirment/Wall") as GameObject;
-        carnivoreTeleport = Resources.Load("Sounds/spawn enemy") as AudioClip;
     }
 
     void Update()

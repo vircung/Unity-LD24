@@ -62,6 +62,7 @@ public class PlantSpawner : MonoBehaviour
                     GameObject obj = col.gameObject;
                     if (obj.transform.FindChild("TagPlant") || obj.transform.Find("TagPlant"))
                     {
+                        Debug.Log("Oooops, there is a plant");
                         canSeed = false;
                         break;
                     }

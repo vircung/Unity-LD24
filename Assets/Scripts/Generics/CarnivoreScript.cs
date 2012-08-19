@@ -4,7 +4,8 @@ using System.Collections.Generic;
 
 public class CarnivoreScript : LiveScript
 {
-
+    
+    AudioClip carnivoreTeleport = null;
 
     // Use this for initialization
     protected new void Start()
@@ -13,7 +14,13 @@ public class CarnivoreScript : LiveScript
 
         hitSound = Resources.Load("Sounds/hit Carnivore") as AudioClip;
         hitParticle = Resources.Load("Particles/Carnivore Particles") as ParticleSystem;
+        carnivoreTeleport = Resources.Load("Sounds/spawn enemy") as AudioClip;
 
+        if (carnivoreTeleport)
+        {
+            audio.clip = carnivoreTeleport;
+            audio.Play();
+        }
         whatEats = TYPE.MEAT;
         affraidOfEnemy = .5f;
         attackStrenght = 4f;

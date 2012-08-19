@@ -16,8 +16,9 @@ public class CameraInputScript : MonoBehaviour
     void Update()
     {
         float x = Input.GetAxisRaw("Horizontal") * Time.deltaTime * moveSpeed;
-        float y = Input.GetAxisRaw("Vertical") * Time.deltaTime * moveSpeed;
+        float y = Input.GetAxisRaw("Mouse ScrollWheel") * Time.deltaTime * moveSpeed * moveSpeed * moveSpeed;
+        float z = Input.GetAxisRaw("Vertical") * Time.deltaTime * moveSpeed;
 
-        transform.Translate(new Vector3(x, 0, y), Space.World);
+        transform.Translate(new Vector3(x, y, z), Space.World);
     }
 }
