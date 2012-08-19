@@ -6,24 +6,76 @@ public class HerbovoreScript : LiveScript
 {
 
     public GameObject yougOne;
+    public ParticleSystem lvlUpParticle;
 
     protected float energyRefill = 0.01f;
     protected float attackDist;
-    // Use this for initialization
+
+    public int myExp;
+    public int nextLvl;
+    protected float nextLvlRatio = 1.01f;
+    public int currLvl;
+
+
     protected new void Start()
     {
+        minDefStrenght = 2.0f;
+        maxDefStrenght = 3.0f;
+
+        minEatingDist = 2.0f;
+        maxEatingDist = 3.0f;
+
         base.Start();
+        SetStats();
+        currLvl = 0;
+        myExp = 0;
+        nextLvl = 30;
         whatEats = TYPE.HERB;
         attackDist = safeDistance + 1;
         affraidOfEnemy = 1.5f;
-        defendStrenght = 3f;
-        eatingDist = Random.Range(2f, 3f);
+
+        ParticleSystem ps = Instantiate(lvlUpParticle, transform.position, Quaternion.identity) as ParticleSystem;
+        ps.Play();
     }
 
     // Update is called once per frame
     protected new void Update()
     {
         base.Update();
+        if (myExp >= nextLvl)
+        {
+            LevelUp();
+        }
+    }
+
+    private void LevelUp()
+    {
+        myExp -= nextLvl;
+        nextLvl = (int)(nextLvl * nextLvlRatio);
+
+        minAttackStrenght *= nextLvlRatio;
+        maxAttackStrenght *= nextLvlRatio;
+
+        minDefStrenght *= nextLvlRatio;
+        maxEatingDist *= nextLvlRatio;
+
+        minEatingDist *= nextLvlRatio;
+        maxEatingDist *= nextLvlRatio;
+
+        maxHP *= nextLvlRatio;
+        currHp = maxHP;
+
+        affraidOfEnemy /= nextLvlRatio;
+        attackDist *= nextLvlRatio;
+
+        nextLvlRatio *= nextLvlRatio;
+
+        currLvl++;
+
+        myGame.playerLvl = Mathf.Max(currLvl, myGame.playerLvl);
+
+        moveForce *= nextLvlRatio;
+        SetStats();
     }
 
     protected new void FixedUpdate()
@@ -95,4 +147,9 @@ public class HerbovoreScript : LiveScript
         }
     }
 
+
+    internal void AddExp(int newExp)
+    {
+        myExp += newExp;
+    }
 }

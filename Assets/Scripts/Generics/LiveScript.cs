@@ -21,6 +21,8 @@ public class LiveScript : BasicScript
     protected bool canEat = true;
     protected float eatingTime = 0.5f;
     protected float eatingDist = 1.5f;
+    protected float minEatingDist = 1.0f;
+    protected float maxEatingDist = 2.0f;
 
     #endregion
 
@@ -32,8 +34,8 @@ public class LiveScript : BasicScript
     protected float searchEnemyRatio = 0.5f;
     protected bool canSearchEnemy = true;
 
-    protected float safeDistance = 4f;
-    protected float affraidOfEnemy = 2f;
+    public float safeDistance = 4f;
+    public float affraidOfEnemy = 2f;
 
     #endregion
 
@@ -44,18 +46,20 @@ public class LiveScript : BasicScript
     protected float runFactor = 100f;
     protected bool canRun;
 
-    protected float moveForce = 40f;
+    public float moveForce = 40f;
 
     #endregion
 
     #region Abilities
 
-    protected float attackStrenght;
+    public float attackStrenght;
+    protected float minAttackStrenght = 1.0f;
+    protected float maxAttackStrenght = 1.5f;
 
     public float currEnergy;
     protected float energyRatio = 1.0f;
     protected float energyUp = 2.0f;
-    protected bool canEnertyUp;
+    protected bool canEnergyUp;
 
     #endregion
 
@@ -63,11 +67,18 @@ public class LiveScript : BasicScript
     {
         base.Start();
 
-        attackStrenght = Random.Range(0.1f, 1f);
-
         currEnergy = Random.Range(10f, 30f);
         type = TYPE.CRITTER | TYPE.MEAT;
+        SetStats();
         ChooseTags();
+    }
+
+    protected new void SetStats()
+    {
+        base.SetStats();
+
+        attackStrenght = Random.Range(minAttackStrenght, maxAttackStrenght);
+        eatingDist = Random.Range(minEatingDist, maxEatingDist);
     }
 
     private void ChooseTags()
@@ -207,7 +218,7 @@ public class LiveScript : BasicScript
             if (whatEats == TYPE.HERB)
             {
                 PlantScript plantScript = (PlantScript)target.GetComponent("PlantScript");
-                StartCoroutine(EatTarget(plantScript.GetHurt(attackStrenght)));
+                StartCoroutine(EatTarget(plantScript.GetHurt(attackStrenght, gameObject)));
                 myGame.score += 10;
             }
             else if (whatEats == BasicScript.TYPE.MEAT)
@@ -218,7 +229,7 @@ public class LiveScript : BasicScript
 
                 if (critterScript != null)
                 {
-                    StartCoroutine(EatTarget(critterScript.GetHurt(attackStrenght)));
+                    StartCoroutine(EatTarget(critterScript.GetHurt(attackStrenght, gameObject)));
                 }
                 else
                 {
@@ -319,4 +330,7 @@ public class LiveScript : BasicScript
         }
     }
 
+    void Destroy()
+    {
+    }
 }

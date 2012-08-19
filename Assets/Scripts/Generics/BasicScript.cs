@@ -3,6 +3,7 @@ using System.Collections;
 
 public class BasicScript : MonoBehaviour
 {
+    public GameObject death;
 
     public enum TYPE
     {
@@ -19,19 +20,29 @@ public class BasicScript : MonoBehaviour
     #region Health
 
     public float currHp;
-    protected float maxHP = 15;
+    public float maxHP = 15;
     protected float healRatio = 5.0f;
     protected float healUp = 2.0f;
     protected bool canHeal = true;
 
     #endregion
 
-    protected float defendStrenght;
+    public float defendStrenght;
+    protected float minDefStrenght = 0.1f;
+    protected float maxDefStrenght = 1.0f;
+    protected int exp;
 
     protected void Start()
     {
+        exp = 10;
         currHp = maxHP / 2;
-        defendStrenght = Random.Range(0.1f, 1f);
+
+        SetStats();
+    }
+
+    protected void SetStats()
+    {
+        defendStrenght = Random.Range(minDefStrenght, maxDefStrenght);
     }
 
     protected void Update()
@@ -39,18 +50,36 @@ public class BasicScript : MonoBehaviour
         TryHeal();
     }
 
+    void OnTriggerEnter(Collider collision)
+    {
+        Debug.Log("Falling damage");
+        myGame.hernivores.Remove(gameObject);
+        Destroy(gameObject);
+    }
+
     protected void FixedUpdate()
     {
     }
 
-    public float GetHurt(float dmg)
+    public float GetHurt(float dmg, GameObject src)
     {
         float damageTaken = dmg - defendStrenght;
         currHp -= dmg;
         if (currHp <= 0)
         {
             damageTaken -= currHp;
+            if (src.transform.FindChild("TagPlayer"))
+            {
+
+                HerbovoreScript hs = src.GetComponent<HerbovoreScript>();
+                Debug.Log(hs.name);
+                hs.AddExp(exp);
+            }
+
             myGame.hernivores.Remove(gameObject);
+            myGame.carnivores.Remove(gameObject);
+            myGame.plants.Remove(gameObject);
+
             Destroy(gameObject);
         }
         return damageTaken;
@@ -84,6 +113,11 @@ public class BasicScript : MonoBehaviour
             currHp = maxHP;
         yield return new WaitForSeconds(cooldown);
         canHeal = true;
+    }
+
+    protected void OnDestroy()
+    {
+        Instantiate(death, transform.position, Quaternion.identity);
     }
 
 }

@@ -54,13 +54,17 @@ public class PlantScript : BasicScript
 
         currHp -= seedCost;
         seeds--;
-
-        Instantiate(seedInstance, position, Quaternion.identity);
+        if (myGame.plants.Count < myGame.maxPlants)
+        {
+            GameObject newOne = Instantiate(seedInstance, position, Quaternion.identity) as GameObject;
+            myGame.plants.Add(newOne);
+        }
     }
 
     public void OnDestroy()
+    
     {
+        base.OnDestroy();
         myGame.buildPoints++;
-        //Destroy(gameObject);
     }
 }
