@@ -25,7 +25,7 @@ public class myGame : MonoBehaviour
 
     protected int btnSize = 30;
     protected int btnOff = 5;
-    public static bool debug = true;
+    public static bool debug = false;
     private float stopingFactor = 0.07f;
     private float minimalScale = 0.06f;
 

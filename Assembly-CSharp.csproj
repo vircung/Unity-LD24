@@ -58,6 +58,7 @@
      <Compile Include="Assets\Scripts\Generics\HerbovoreScript.cs" />
      <Compile Include="Assets\Scripts\Generics\LiveScript.cs" />
      <Compile Include="Assets\Scripts\Generics\PlantScript.cs" />
+     <Compile Include="Assets\Scripts\Scenes\Level1.cs" />
      <Compile Include="Assets\Scripts\Scenes\Title.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

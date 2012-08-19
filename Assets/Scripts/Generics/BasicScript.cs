@@ -52,9 +52,12 @@ public class BasicScript : MonoBehaviour
 
     void OnTriggerEnter(Collider collision)
     {
-        Debug.Log("Falling damage");
-        myGame.hernivores.Remove(gameObject);
-        Destroy(gameObject);
+        if (collision.CompareTag("Death"))
+        {
+            Debug.Log("Falling damage");
+            myGame.hernivores.Remove(gameObject);
+            Destroy(gameObject);
+        }
     }
 
     protected void FixedUpdate()

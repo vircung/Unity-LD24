@@ -33,6 +33,10 @@ public class Title : MonoBehaviour
         "When Carnivore eats enough plants they lvl up! \n" +
         "So you can breed \"Super Carnivore\". \n" +
         "But this will take some time. \n\n\n" +
+        "You can move camera with WSAD and arrows. \n" +
+        "You can place walls by clicking on the ground. \n" +
+        "You can remove walls by clicking on them.\n\n\n" +
+        "There is no ending goal \n\n\n" +
         "I hope you'll have !!fun!! :) \n\n\n" +
         "Click to get back";
 
