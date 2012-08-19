@@ -4,9 +4,9 @@ using System.Collections;
 public class PlantScript : BasicScript
 {
 
-    public GameObject seedInstance;
-    public int seeds;
-    public float getSeedRate;
+    GameObject seedInstance;
+    int seeds;
+    float getSeedRate;
     protected float growRate = 0.01f;
     protected float seedCost = 10f;
 
@@ -14,6 +14,7 @@ public class PlantScript : BasicScript
     protected new void Start()
     {
         base.Start();
+        seedInstance = Resources.Load("Prefabs/Actors/Plant") as GameObject;
         currHp = Random.Range(0.1f, 5f);
         seeds = Random.Range(0, 3);
         getSeedRate = Random.Range(0f, 0.0001f);
@@ -61,8 +62,7 @@ public class PlantScript : BasicScript
         }
     }
 
-    public void OnDestroy()
-    
+    public new void OnDestroy()
     {
         base.OnDestroy();
         myGame.buildPoints++;

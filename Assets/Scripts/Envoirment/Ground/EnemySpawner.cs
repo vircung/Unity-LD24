@@ -4,16 +4,17 @@ using System.Collections;
 public class EnemySpawner : MonoBehaviour
 {
 
-    public GameObject enemy;
     public static float enemySpawnTime = 20f;
     public static float enemyTime;
 
     float levelBound;
     float nextEnemyRatio = 0.95f;
 
+    GameObject enemy;
+
     void Start()
     {
-        enemy = Resources.Load("Carnivore") as GameObject;
+        enemy = Resources.Load("Prefabs/Actors/Carnivore") as GameObject;
         enemyTime = 0f;
         levelBound = 0f;
     }

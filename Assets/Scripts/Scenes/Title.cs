@@ -13,40 +13,47 @@ public class Title : MonoBehaviour
     public Texture omnomTexture;
     public AudioClip woot;
 
-    private float bgTop;
-    private float bgLeft;
-    private float bgWidth;
-    private float bgHeight;
+    float bgTop;
+    float bgLeft;
+    float bgWidth;
+    float bgHeight;
 
-    private float btOffset;
-    private float btTop;
-    private float btLeft;
-    private float btWidth;
-    private float btHeight;
+    float btOffset;
+    float btTop;
+    float btLeft;
+    float btWidth;
+    float btHeight;
 
-    private State state;
-    private string instructions = "Welcome to the \"The Eco\" \n\n" +
-        "You have to care for Herbivores (that green balls). \n" +
-        "They eat plants wich look like green monkeys. \n" +
-        "They are quite stupid so YOU have to care for them and \n" +
-        "watch out for Carnivores. You can place pices of wall to protect your pets. \n" +
-        "When Carnivore eats enough plants they lvl up! \n" +
-        "So you can breed \"Super Carnivore\". \n" +
-        "But this will take some time. \n\n\n" +
-        "You can move camera with WSAD and arrows. \n" +
-        "You can place walls by clicking on the ground. \n" +
-        "You can remove walls by clicking on them.\n\n\n" +
-        "There is no ending goal \n\n\n" +
-        "I hope you'll have !!fun!! :) \n\n\n" +
-        "Click to get back";
+    State state;
+    string instructions =
+        "Welcome to the \"The Eco\" \n\n" +
 
+       "You have to care for Herbivores (that green balls). \n" +
+       "They eat plants wich look like green monkeys. \n" +
+       "They are quite stupid so YOU have to care for them and \n" +
+       "watch out for Carnivores. You can place pices of wall to protect your pets. \n" +
+       "When Carnivore eats enough plants they lvl up! \n" +
+       "So you can breed \"Super Carnivore\". \n" +
+       "But this will take some time. \n\n\n" +
 
-    private float waitToLoadLevel = 1.0f;
+       "You can move camera with WSAD and arrows. \n" +
+       "You can place walls by clicking on the ground. \n" +
 
+       "You can remove walls by clicking on them.\n\n\n" +
+
+       "There is no ending goal \n\n\n" +
+
+       "I hope you'll have !!fun!! :) \n\n\n" +
+
+       "Click to get back";
+
+    float waitToLoadLevel = 1.0f;
 
     void Start()
     {
         state = State.Start;
+        woot = Resources.Load("Sounds/woot") as AudioClip;
+        omnomTexture = Resources.Load("Textures/omnom") as Texture;
 
         bgLeft = Screen.width / 2 - omnomTexture.width / 2;
         bgTop = Screen.height / 2 - omnomTexture.height / 2;

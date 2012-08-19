@@ -8,10 +8,10 @@ public class LevelScript : MonoBehaviour
     public static float scale;
     public static float pos;
 
-    private float levelize_time = 2f;
-    private float max_level = 10f;
-    public static float amount = .5f;
-    private bool levelize = true;
+    float levelize_time = 2f;
+    float max_level = 10f;
+    float amount = .5f;
+    bool levelize = true;
 
     GameObject wall;
 
@@ -36,23 +36,23 @@ public class LevelScript : MonoBehaviour
         scale = pos * 2;
         GroundScript.bound = pos - 1;
 
-        wall = GameObject.Find("Ground");
+        wall = GameObject.Find("Ground(Clone)");
         wall.transform.localScale = new Vector3(levelSize, levelSize, levelSize);
         wall.transform.position = new Vector3(0, 0, 0);
 
-        wall = GameObject.Find("North wall");
+        wall = GameObject.Find("North wall(Clone)");
         wall.transform.position = new Vector3(-pos, 0, pos);
         wall.transform.localScale = new Vector3(1, 1, scale);
 
-        wall = GameObject.Find("South wall");
+        wall = GameObject.Find("South wall(Clone)");
         wall.transform.position = new Vector3(-pos, 0, -pos);
         wall.transform.localScale = new Vector3(1, 1, scale);
 
-        wall = GameObject.Find("West wall");
+        wall = GameObject.Find("West wall(Clone)");
         wall.transform.position = new Vector3(-pos, 0, -pos);
         wall.transform.localScale = new Vector3(1, 1, scale);
 
-        wall = GameObject.Find("East wall");
+        wall = GameObject.Find("East wall(Clone)");
         wall.transform.position = new Vector3(pos, 0, -pos);
         wall.transform.localScale = new Vector3(1, 1, scale);
 

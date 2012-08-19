@@ -3,16 +3,18 @@ using System.Collections;
 
 public class PlantSpawner : MonoBehaviour
 {
-    public GameObject plant;
-    public AudioClip plantPopUp;
     public static float plantTime;
     public static float plantSpawnTime = 5f;
+
+    GameObject plant;
+    AudioClip plantPopUp;
 
     float levelBound;
 
     void Start()
     {
-        plant = Resources.Load("Plant") as GameObject;
+        plant = Resources.Load("Prefabs/Actors/Plant") as GameObject;
+        plantPopUp = Resources.Load("Sounds/spawn Plant") as AudioClip;
         plantTime = 0f;
         levelBound = 0f;
     }

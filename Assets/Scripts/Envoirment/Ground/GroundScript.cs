@@ -3,30 +3,31 @@ using System.Collections;
 
 public class GroundScript : MonoBehaviour
 {
-    public GameObject wall;
-    public GameObject player;
-    public AudioClip carnivoreTeleport;
-
     public static float bound = 0;
 
-    private GameObject player_instance = null;
-    private bool isStarted = false;
+    GameObject wall = null;
+    GameObject player = null;
+    AudioClip carnivoreTeleport = null;
 
-
+    GameObject player_instance = null;
+    bool isStarted = false;
 
     void Start()
     {
         isStarted = false;
+        player = Resources.Load("Prefabs/Actors/Herbivore") as GameObject;
+        wall = Resources.Load("Prefabs/Envoirment/Wall") as GameObject;
+        carnivoreTeleport = Resources.Load("Sounds/spawn enemy") as AudioClip;
     }
 
     void Update()
     {
-        if (!isStarted)
+        if (!isStarted && player != null)
         {
             isStarted = true;
             Vector3 position = new Vector3(Random.Range(-bound, bound), 0f, Random.Range(-bound, bound));
             player_instance = (GameObject)Instantiate(player, position, Quaternion.identity);
-            myGame.hernivores.Add(player_instance);
+            myGame.herbovores.Add(player_instance);
         }
     }
 
@@ -34,6 +35,7 @@ public class GroundScript : MonoBehaviour
     {
         if (myGame.buildPoints <= 0)
             return;
+        Debug.Log(Camera.main);
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
@@ -49,6 +51,5 @@ public class GroundScript : MonoBehaviour
             myGame.buildPoints--;
         }
     }
-
 }
 

@@ -5,20 +5,23 @@ using System.Collections.Generic;
 public class HerbovoreScript : LiveScript
 {
 
-    public GameObject yougOne;
-    public ParticleSystem lvlUpParticle;
 
     protected float energyRefill = 0.01f;
     protected float attackDist;
 
     public int myExp;
     public int nextLvl;
-    protected float nextLvlRatio = 1.01f;
     public int currLvl;
 
+    float nextLvlRatio = 1.01f;
+    GameObject yougOne;
 
     protected new void Start()
     {
+        yougOne = Resources.Load("Prefabs/Actors/Herbivore") as GameObject;
+        hitSound = Resources.Load("Sounds/hit Herbivore") as AudioClip;
+        hitParticle = Resources.Load("Particles/Hernivore Particles") as ParticleSystem;
+
         minDefStrenght = 2.0f;
         maxDefStrenght = 3.0f;
 
@@ -33,9 +36,6 @@ public class HerbovoreScript : LiveScript
         whatEats = TYPE.HERB;
         attackDist = safeDistance + 1;
         affraidOfEnemy = 1.5f;
-
-        ParticleSystem ps = Instantiate(lvlUpParticle, transform.position, Quaternion.identity) as ParticleSystem;
-        ps.Play();
     }
 
     // Update is called once per frame
@@ -103,7 +103,7 @@ public class HerbovoreScript : LiveScript
             position.y += .5f;
 
             GameObject newOne = (GameObject)Instantiate(yougOne, position, Quaternion.identity);
-            myGame.hernivores.Add(newOne);
+            myGame.herbovores.Add(newOne);
             HerbovoreScript script = (HerbovoreScript)newOne.GetComponent("HerbovoreScript");
             Vector3 dir = -targetDir;
             script.Move(dir * 10);

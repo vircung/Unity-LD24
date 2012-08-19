@@ -6,8 +6,9 @@ public class LiveScript : BasicScript
 {
 
     public GameObject[] tags;
-    public ParticleSystem particle;
-    public AudioClip hitClip;
+
+    protected ParticleSystem hitParticle;
+    protected AudioClip hitSound;
 
     #region Eating
 
@@ -67,6 +68,9 @@ public class LiveScript : BasicScript
     {
         base.Start();
 
+        hitParticle = Resources.Load("Particles/Heal Particles") as ParticleSystem;
+        hitSound = Resources.Load("Sounds/eat") as AudioClip;
+
         currEnergy = Random.Range(10f, 30f);
         type = TYPE.CRITTER | TYPE.MEAT;
         SetStats();
@@ -83,17 +87,7 @@ public class LiveScript : BasicScript
 
     private void ChooseTags()
     {
-        GameObject tag;
-        if (attackStrenght <= 3)
-        {
-            tag = (GameObject)Instantiate(tags[0]);
-        }
-        else
-        {
-            tag = (GameObject)Instantiate(tags[1]);
-        }
         canEat = true;
-        tag.transform.parent = transform;
     }
 
     // Update is called once per frame
@@ -129,11 +123,11 @@ public class LiveScript : BasicScript
         if (whatEats == TYPE.HERB)
         {
             GameObject[] tmp = GameObject.FindGameObjectsWithTag("Plant");
-            if(tmp != null)
-            foreach (GameObject obj in tmp)
-            {
-                possibleTargets.Add(obj.transform.parent.gameObject);
-            }
+            if (tmp != null)
+                foreach (GameObject obj in tmp)
+                {
+                    possibleTargets.Add(obj.transform.parent.gameObject);
+                }
         } if (whatEats == TYPE.MEAT)
         {
             GameObject[] tmp = GameObject.FindGameObjectsWithTag("Critter");
@@ -247,7 +241,7 @@ public class LiveScript : BasicScript
             if (Vector3.Dot(enemyDir.normalized, targetDir.normalized) < 0)
             {
                 Debug.Log("On my BAAAAACK");
-                if (enemyDist < safeDistance )
+                if (enemyDist < safeDistance)
                 {
                     Vector3 tryDir = Vector3.Cross(Vector3.up, transform.position - enemy.transform.position);
                     Debug.DrawRay(transform.position, tryDir, Color.magenta, 2.0f);
@@ -296,9 +290,10 @@ public class LiveScript : BasicScript
     protected IEnumerator EatTarget(float amount)
     {
         canEat = false;
-        audio.clip = hitClip;
+        audio.clip = hitSound;
         audio.Play();
-        Instantiate(particle, target.transform.position, Quaternion.identity);
+        if (hitParticle)
+            Instantiate(hitParticle, target.transform.position, Quaternion.identity);
         currEnergy += amount;
         yield return new WaitForSeconds(eatingTime);
         canEat = true;

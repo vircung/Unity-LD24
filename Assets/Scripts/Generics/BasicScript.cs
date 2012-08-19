@@ -3,7 +3,6 @@ using System.Collections;
 
 public class BasicScript : MonoBehaviour
 {
-    public GameObject death;
 
     public enum TYPE
     {
@@ -13,7 +12,8 @@ public class BasicScript : MonoBehaviour
         CRITTER = MEAT << 1,
     };
 
-    public ParticleSystem healParticle;
+    ParticleSystem healParticle;
+    ParticleSystem death;
 
     protected TYPE type;
 
@@ -34,6 +34,8 @@ public class BasicScript : MonoBehaviour
 
     protected void Start()
     {
+        death = Resources.Load("Death Particles") as ParticleSystem;
+        healParticle = null;
         exp = 10;
         currHp = maxHP / 2;
 
@@ -55,7 +57,7 @@ public class BasicScript : MonoBehaviour
         if (collision.CompareTag("Death"))
         {
             Debug.Log("Falling damage");
-            myGame.hernivores.Remove(gameObject);
+            myGame.herbovores.Remove(gameObject);
             Destroy(gameObject);
         }
     }
@@ -79,7 +81,7 @@ public class BasicScript : MonoBehaviour
                 hs.AddExp(exp);
             }
 
-            myGame.hernivores.Remove(gameObject);
+            myGame.herbovores.Remove(gameObject);
             myGame.carnivores.Remove(gameObject);
             myGame.plants.Remove(gameObject);
 
@@ -110,7 +112,9 @@ public class BasicScript : MonoBehaviour
     {
 
         canHeal = false;
-        Instantiate(healParticle, transform.position, Quaternion.identity);
+
+        //Instantiate(healParticle, transform.position, Quaternion.identity);
+
         currHp += amnt;
         if (currHp > maxHP)
             currHp = maxHP;
@@ -120,7 +124,8 @@ public class BasicScript : MonoBehaviour
 
     protected void OnDestroy()
     {
-        Instantiate(death, transform.position, Quaternion.identity);
+        if (death)
+            Instantiate(death, transform.position, Quaternion.identity);
     }
 
 }

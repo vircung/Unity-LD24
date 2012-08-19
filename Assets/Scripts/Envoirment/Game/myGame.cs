@@ -4,35 +4,29 @@ using System.Collections.Generic;
 
 public class myGame : MonoBehaviour
 {
-
     public static int score;
     public static int buildPoints;
-    protected float time;
-    protected float timeToRestart;
-    public static bool gamesOn;
-    public GameObject player;
-    public static List<GameObject> hernivores = new List<GameObject>();
-    public static List<GameObject> carnivores = new List<GameObject>();
     public static int playerLvl;
 
-
-    protected float slowTime = 0.3f;
-    protected float normalTime = 1.0f;
-    protected float fastTime = 2.0f;
-    protected float superFastTime = 4.0f;
-
-    protected bool ending = false;
-
-    protected int btnSize = 30;
-    protected int btnOff = 5;
-    public static bool debug = false;
-    private float stopingFactor = 0.07f;
-    private float minimalScale = 0.06f;
-
-
+    public static List<GameObject> herbovores = new List<GameObject>();
+    public static List<GameObject> carnivores = new List<GameObject>();
     public static List<GameObject> plants = new List<GameObject>();
     public static float maxPlants;
 
+    float slowTime = 0.3f;
+    float normalTime = 1.0f;
+    float fastTime = 2.0f;
+    float superFastTime = 4.0f;
+    float stopingFactor = 0.07f;
+    float minimalScale = 0.06f;
+
+    bool ending;
+    bool gamesOn;
+
+    int btnSize = 30;
+    int btnOff = 5;
+    
+    public static bool debug = false;
 
     // Use this for initialization
     void Start()
@@ -40,15 +34,16 @@ public class myGame : MonoBehaviour
         maxPlants = LevelScript.levelSize * 10;
 
         NormalTime();
-        
+
         playerLvl = 0;
         score = 0;
+        ending = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (hernivores.Count > 0)
+        if (herbovores.Count > 0)
             gamesOn = true;
         else
         {

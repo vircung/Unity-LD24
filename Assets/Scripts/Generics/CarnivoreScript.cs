@@ -10,6 +10,10 @@ public class CarnivoreScript : LiveScript
     protected new void Start()
     {
         base.Start();
+
+        hitSound = Resources.Load("Sounds/hit Carnivore") as AudioClip;
+        hitParticle = Resources.Load("Particles/Carnivore Particles") as ParticleSystem;
+
         whatEats = TYPE.MEAT;
         affraidOfEnemy = .5f;
         attackStrenght = 4f;
