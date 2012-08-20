@@ -3,9 +3,12 @@ using System.Collections;
 
 public class ParticleSystemScript : MonoBehaviour
 {
+    void Awake()
+    {
+        Debug.Log("Particles");
+    }
     void Start()
     {
-        particleSystem.Emit(5);
     }
     void Update()
     {

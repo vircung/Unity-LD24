@@ -16,7 +16,7 @@ public class BasicScript : MonoBehaviour
     ParticleSystem death;
 
     protected TYPE type;
-
+    
     #region Health
 
     public float currHp;

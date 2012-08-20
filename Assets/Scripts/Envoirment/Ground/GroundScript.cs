@@ -33,7 +33,6 @@ public class GroundScript : MonoBehaviour
     {
         if (myGame.buildPoints <= 0)
             return;
-        Debug.Log(Camera.main);
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 

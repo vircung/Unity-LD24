@@ -65,7 +65,7 @@ public class HerbovoreScript : LiveScript
         maxHP *= nextLvlRatio;
         currHp = maxHP;
 
-        affraidOfEnemy /= nextLvlRatio;
+        safeDistance /= nextLvlRatio;
         attackDist *= nextLvlRatio;
 
         nextLvlRatio *= nextLvlRatio;
@@ -115,6 +115,9 @@ public class HerbovoreScript : LiveScript
     protected new void LookForFood()
     {
         target = null;
+        targetDir = Vector3.zero;
+        targetDist = float.MaxValue;
+
         List<GameObject> possibleTargets = new List<GameObject>();
 
         GameObject[] tmp = GameObject.FindGameObjectsWithTag("Plant");

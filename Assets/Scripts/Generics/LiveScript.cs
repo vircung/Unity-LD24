@@ -7,7 +7,7 @@ public class LiveScript : BasicScript
 
     public GameObject[] tags;
 
-    protected ParticleSystem hitParticle;
+    public ParticleSystem hitParticle;
     protected AudioClip hitSound;
 
     #region Eating
@@ -235,50 +235,24 @@ public class LiveScript : BasicScript
 
     private void Move()
     {
-
-        if (enemy != null && enemyDist <= safeDistance * affraidOfEnemy)
+        float angle = 1;
+        Vector3 tryDir = Vector3.zero;
+        if (target)
         {
-            if (Vector3.Dot(enemyDir.normalized, targetDir.normalized) < 0)
-            {
-                Debug.Log("On my BAAAAACK");
-                if (enemyDist < safeDistance)
-                {
-                    Vector3 tryDir = Vector3.Cross(Vector3.up, transform.position - enemy.transform.position);
-                    Debug.DrawRay(transform.position, tryDir, Color.magenta, 2.0f);
+            Debug.DrawLine(collider.bounds.center, target.collider.bounds.center, Color.green);
+            angle = Vector3.Dot(enemyDir.normalized, targetDir.normalized);
+            Debug.Log("Enemy-Food angle " + angle);
+            angle = Vector3.Dot(tryDir.normalized, targetDir.normalized);
+            Debug.Log("Try-Food angle " + angle);
+        }
+        if (enemy)
+        {
+            tryDir = Vector3.Cross(Vector3.up, enemy.collider.bounds.center - collider.bounds.center).normalized;
 
-                    Ray ray = new Ray(transform.position, tryDir);
-                    RaycastHit hit;
+            Debug.DrawLine(collider.bounds.center, enemy.collider.bounds.center, Color.red);
+            Debug.DrawRay(collider.bounds.center, tryDir, Color.white);
+            
 
-                    if (Physics.Raycast(ray, out hit, safeDistance))
-                    {
-                        Debug.Log("Right clean, GO!");
-                        if (canRun)
-                            StartCoroutine(Run(tryDir));
-                        else
-                            Move(tryDir);
-                    }
-                    else
-                    {
-
-                        Debug.Log("Left clean, GO!");
-                        if (canRun)
-                            StartCoroutine(Run(tryDir));
-                        else
-                            Move(tryDir);
-                    }
-                }
-                else if (canRun)
-                    StartCoroutine(Run(targetDir));
-                else
-                    Move(targetDir);
-            }
-            else
-            {
-                if (canRun)
-                    StartCoroutine(Run(-enemyDir));
-                else
-                    Move(-enemyDir);
-            }
         }
         else
         {
@@ -293,7 +267,10 @@ public class LiveScript : BasicScript
         audio.clip = hitSound;
         audio.Play();
         if (hitParticle)
-            Instantiate(hitParticle, target.transform.position, Quaternion.identity);
+        {
+            ParticleSystem ps = Instantiate(hitParticle, target.transform.position, Quaternion.identity) as ParticleSystem;
+            ps.Play();
+        }
         currEnergy += amount;
         yield return new WaitForSeconds(eatingTime);
         canEat = true;
