@@ -18,9 +18,11 @@ public class HerbovoreScript : LiveScript
 
     protected new void Start()
     {
+        base.Start();
+
         yougOne = Resources.Load("Prefabs/Actors/Herbivore") as GameObject;
         hitSound = Resources.Load("Sounds/hit Herbivore") as AudioClip;
-        hitParticle = Resources.Load("Particles/Hernivore Particles") as ParticleSystem;
+        hitParticle = Resources.Load("Particles/Hernivore Particles") as GameObject;
 
         minDefStrenght = 2.0f;
         maxDefStrenght = 3.0f;
@@ -28,7 +30,6 @@ public class HerbovoreScript : LiveScript
         minEatingDist = 2.0f;
         maxEatingDist = 3.0f;
 
-        base.Start();
         SetStats();
         currLvl = 0;
         myExp = 0;

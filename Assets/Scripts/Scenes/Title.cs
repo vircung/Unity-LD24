@@ -25,8 +25,11 @@ public class Title : MonoBehaviour
     float btHeight;
 
     State state;
+
+    // TODO : FFS UPDATE IT !!!!!!11!!1!!11
+    string build = "Build 0.0.3";
     string instructions =
-        "Welcome to the \"The Eco\" \n\n" +
+        "Welcome to the \"NomOm\" \n\n" +
 
        "You have to care for Herbivores (that green balls). \n" +
        "They eat plants wich look like green monkeys. \n" +
@@ -36,10 +39,10 @@ public class Title : MonoBehaviour
        "So you can breed \"Super Carnivore\". \n" +
        "But this will take some time. \n\n\n" +
 
-       "You can move camera with WSAD and arrows. \n" +
-       "You can place walls by clicking on the ground. \n" +
-
-       "You can remove walls by clicking on them.\n\n\n" +
+       "You can move camera with WSAD or arrows. \n " + 
+       "Zoom in and zoom out with mouse wheel.\n" +
+       "Place walls by clicking on the ground. \n" +
+       "Remove walls by clicking on them.\n\n\n" +
 
        "There is no ending goal \n\n\n" +
 
@@ -48,6 +51,7 @@ public class Title : MonoBehaviour
        "Click to get back";
 
     float waitToLoadLevel = 1.0f;
+    float volume = 0.1f;
 
     void Start()
     {
@@ -55,6 +59,7 @@ public class Title : MonoBehaviour
         woot = Resources.Load("Sounds/woot") as AudioClip;
         omnomTexture = Resources.Load("Textures/omnom") as Texture;
 
+        audio.volume = volume;
         bgLeft = Screen.width / 2 - omnomTexture.width / 2;
         bgTop = Screen.height / 2 - omnomTexture.height / 2;
         bgWidth = omnomTexture.width;
@@ -96,6 +101,8 @@ public class Title : MonoBehaviour
             audio.Play();
             state = State.Huh;
         }
+
+        GUI.Label(new Rect(btLeft, bgTop + bgHeight - btHeight, btWidth, btHeight), build);
     }
 
     private IEnumerator StartLevel()

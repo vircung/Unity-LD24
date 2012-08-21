@@ -62,7 +62,6 @@ public class PlantSpawner : MonoBehaviour
                     GameObject obj = col.gameObject;
                     if (obj.transform.FindChild("TagPlant") || obj.transform.Find("TagPlant"))
                     {
-                        Debug.Log("Oooops, there is a plant");
                         canSeed = false;
                         break;
                     }
@@ -72,6 +71,8 @@ public class PlantSpawner : MonoBehaviour
             if (canSeed)
             {
                 GameObject newOne = Instantiate(plant, position, new Quaternion(1, Random.Range(5f, 360f), 1, 1)) as GameObject;
+                audio.clip = plantPopUp;
+                audio.Play();
                 myGame.plants.Add(newOne);
                 plantTime -= plantSpawnTime;
             }

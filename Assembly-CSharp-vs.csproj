@@ -44,6 +44,9 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Actors\CarnivoreScript.cs" />
+     <Compile Include="Assets\Scripts\Actors\HerbovoreScript.cs" />
+     <Compile Include="Assets\Scripts\Actors\PlantScript.cs" />
      <Compile Include="Assets\Scripts\Envoirment\Game\CameraInputScript.cs" />
      <Compile Include="Assets\Scripts\Envoirment\Game\LevelScript.cs" />
      <Compile Include="Assets\Scripts\Envoirment\Game\SpawnLevel.cs" />
@@ -51,13 +54,10 @@
      <Compile Include="Assets\Scripts\Envoirment\Ground\EnemySpawner.cs" />
      <Compile Include="Assets\Scripts\Envoirment\Ground\GroundScript.cs" />
      <Compile Include="Assets\Scripts\Envoirment\Ground\PlantSpawner.cs" />
+     <Compile Include="Assets\Scripts\Envoirment\LiveScript.cs" />
      <Compile Include="Assets\Scripts\Envoirment\ParticleSystemScript.cs" />
      <Compile Include="Assets\Scripts\Envoirment\WallScript.cs" />
      <Compile Include="Assets\Scripts\Generics\BasicScript.cs" />
-     <Compile Include="Assets\Scripts\Generics\CarnivoreScript.cs" />
-     <Compile Include="Assets\Scripts\Generics\HerbovoreScript.cs" />
-     <Compile Include="Assets\Scripts\Generics\LiveScript.cs" />
-     <Compile Include="Assets\Scripts\Generics\PlantScript.cs" />
      <Compile Include="Assets\Scripts\Scenes\Level1.cs" />
      <Compile Include="Assets\Scripts\Scenes\Title.cs" />
   </ItemGroup>

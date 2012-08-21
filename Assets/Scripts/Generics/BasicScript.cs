@@ -12,8 +12,7 @@ public class BasicScript : MonoBehaviour
         CRITTER = MEAT << 1,
     };
 
-    ParticleSystem healParticle;
-    ParticleSystem death;
+    GameObject death;
 
     protected TYPE type;
     
@@ -34,8 +33,8 @@ public class BasicScript : MonoBehaviour
 
     protected void Start()
     {
-        death = Resources.Load("Particles/Death Particles") as ParticleSystem;
-        healParticle = null;
+        death = Resources.Load("Particles/Death Particles") as GameObject;
+
         exp = 10;
         currHp = maxHP / 2;
 

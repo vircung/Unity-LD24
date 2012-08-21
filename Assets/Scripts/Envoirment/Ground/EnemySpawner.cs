@@ -11,10 +11,12 @@ public class EnemySpawner : MonoBehaviour
     float nextEnemyRatio = 0.95f;
 
     GameObject enemy;
+    AudioClip enemyPopUp;
 
     void Start()
     {
         enemy = Resources.Load("Prefabs/Actors/Carnivore") as GameObject;
+        enemyPopUp = Resources.Load("Sounds/spawn enemy") as AudioClip;
         enemyTime = 0f;
         levelBound = 0f;
     }
@@ -47,6 +49,8 @@ public class EnemySpawner : MonoBehaviour
             position.z = Random.Range(-levelBound, levelBound);
 
             GameObject go = Instantiate(enemy, position, Quaternion.identity) as GameObject;
+            audio.clip = enemyPopUp;
+            audio.Play();
             myGame.carnivores.Add(go);
             enemyTime -= enemySpawnTime;
             enemySpawnTime *= nextEnemyRatio;

@@ -7,7 +7,7 @@ public class LiveScript : BasicScript
 
     public GameObject[] tags;
 
-    public ParticleSystem hitParticle;
+    public GameObject hitParticle;
     protected AudioClip hitSound;
 
     #region Eating
@@ -68,7 +68,7 @@ public class LiveScript : BasicScript
     {
         base.Start();
 
-        hitParticle = Resources.Load("Particles/Heal Particles") as ParticleSystem;
+        hitParticle = Resources.Load("Particles/Heal Particles") as GameObject;
         hitSound = Resources.Load("Sounds/eat") as AudioClip;
 
         currEnergy = Random.Range(10f, 30f);
@@ -251,7 +251,7 @@ public class LiveScript : BasicScript
 
             Debug.DrawLine(collider.bounds.center, enemy.collider.bounds.center, Color.red);
             Debug.DrawRay(collider.bounds.center, tryDir, Color.white);
-            
+
 
         }
         else
@@ -266,11 +266,7 @@ public class LiveScript : BasicScript
         canEat = false;
         audio.clip = hitSound;
         audio.Play();
-        if (hitParticle)
-        {
-            ParticleSystem ps = Instantiate(hitParticle, target.transform.position, Quaternion.identity) as ParticleSystem;
-            ps.Play();
-        }
+        GameObject ps = Instantiate(hitParticle, target.transform.position, Quaternion.identity) as GameObject;
         currEnergy += amount;
         yield return new WaitForSeconds(eatingTime);
         canEat = true;

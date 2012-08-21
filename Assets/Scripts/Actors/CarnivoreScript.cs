@@ -13,7 +13,7 @@ public class CarnivoreScript : LiveScript
         base.Start();
 
         hitSound = Resources.Load("Sounds/hit Carnivore") as AudioClip;
-        hitParticle = Resources.Load("Particles/Carnivore Particles") as ParticleSystem;
+        hitParticle = Resources.Load("Particles/Carnivore Particles") as GameObject;
         carnivoreTeleport = Resources.Load("Sounds/spawn enemy") as AudioClip;
 
         if (carnivoreTeleport)
