@@ -27,7 +27,7 @@ public class Title : MonoBehaviour
     State state;
 
     // TODO : FFS UPDATE IT !!!!!!11!!1!!11
-    string build = "Build 0.0.3";
+    string build = "Build 0.0.4";
     string instructions =
         "Welcome to the \"NomOm\" \n\n" +
 
