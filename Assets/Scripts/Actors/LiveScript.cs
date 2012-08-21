@@ -37,6 +37,7 @@ public class LiveScript : BasicScript
 
     public float safeDistance = 4f;
     public float affraidOfEnemy = 2f;
+    float panicFactor = 1.5f;
 
     #endregion
 
@@ -117,6 +118,7 @@ public class LiveScript : BasicScript
     protected IEnumerator LookForFood()
     {
         target = null;
+        targetDist = float.MaxValue;
         canSearchFood = false;
 
         List<GameObject> possibleTargets = new List<GameObject>();
@@ -165,6 +167,8 @@ public class LiveScript : BasicScript
     protected IEnumerator LookForEnemy()
     {
         enemy = null;
+        enemyDist = float.MaxValue;
+        enemyDir = Vector3.zero;
         canSearchEnemy = false;
 
         List<GameObject> possibleEnemys = new List<GameObject>();
@@ -235,29 +239,74 @@ public class LiveScript : BasicScript
 
     private void Move()
     {
-        float angle = 1;
-        Vector3 tryDir = Vector3.zero;
-        if (target)
+        DecideWhereToMove();
+    }
+
+    private void DecideWhereToMove()
+    {
+        if (enemyDist <= safeDistance / panicFactor && enemy) // Panic moce on!!
         {
-            Debug.DrawLine(collider.bounds.center, target.collider.bounds.center, Color.green);
-            angle = Vector3.Dot(enemyDir.normalized, targetDir.normalized);
-            Debug.Log("Enemy-Food angle " + angle);
-            angle = Vector3.Dot(tryDir.normalized, targetDir.normalized);
-            Debug.Log("Try-Food angle " + angle);
+            Vector3 tryDir = Vector3.Cross(Vector3.up, enemy.collider.bounds.center - collider.bounds.center).normalized;
+
+            Ray ray = new Ray(collider.bounds.center, -enemyDir);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                Debug.DrawLine(collider.bounds.center, hit.point, Color.blue, 1.0f);
+                if (hit.distance > safeDistance)
+                {
+                    TryRun(-targetDir);
+                    return;
+                }
+            }
+
+            float leftDistance = float.MinValue, rightDistance = float.MinValue;
+            Vector3 leftDir = -tryDir, rightDir = tryDir;
+
+            ray = new Ray(collider.bounds.center, rightDir);
+            if (Physics.Raycast(ray, out hit))
+            {
+                rightDistance = hit.distance;
+                Debug.DrawLine(collider.bounds.center, hit.point, Color.yellow, 1.0f);
+            }
+
+            ray = new Ray(collider.bounds.center, leftDir);
+            if (Physics.Raycast(ray, out hit))
+            {
+                leftDistance = hit.distance;
+                Debug.DrawLine(collider.bounds.center, hit.point, Color.gray, 1.0f);
+            }
+
+            float res = Mathf.Max(new float[] { leftDistance, rightDistance, enemyDist });
+
+            Debug.Log("PANIC PANIC PANIC");
+            TryRun(GetPanicDir(leftDistance, rightDistance, ref leftDir, ref rightDir, res));
         }
-        if (enemy)
+        else if (enemyDist < safeDistance && enemy) // Avoid enemy
         {
-            tryDir = Vector3.Cross(Vector3.up, enemy.collider.bounds.center - collider.bounds.center).normalized;
-
-            Debug.DrawLine(collider.bounds.center, enemy.collider.bounds.center, Color.red);
-            Debug.DrawRay(collider.bounds.center, tryDir, Color.white);
-
-
+            Debug.Log("Just avoid");
+            TryRun(-targetDir);
         }
-        else
+        else if (target) // Get food
         {
+            Debug.Log("Getting food");
             Move(targetDir);
         }
+        else // JUMP ! :D
+        {
+            Move(Vector3.up);
+        }
+    }
+
+    private Vector3 GetPanicDir(float leftDistance, float rightDistance, ref Vector3 leftDir, ref Vector3 rightDir, float max)
+    {
+        if (leftDistance == max)
+            return leftDir;
+        else if (rightDistance == max)
+            return rightDir;
+        else
+            return -targetDir;
     }
 
 
@@ -298,7 +347,20 @@ public class LiveScript : BasicScript
         }
     }
 
+    protected void TryRun(Vector3 dir)
+    {
+        if (currEnergy >= runCost && canRun)
+        {
+            Run(dir);
+        }
+        else
+        {
+            Move(dir);
+        }
+    }
+
     void Destroy()
     {
     }
+
 }

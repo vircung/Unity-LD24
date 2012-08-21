@@ -51,15 +51,15 @@ public class BasicScript : MonoBehaviour
         TryHeal();
     }
 
-    void OnTriggerEnter(Collider collision)
-    {
-        if (collision.CompareTag("Death"))
-        {
-            Debug.Log("Falling damage");
-            myGame.herbovores.Remove(gameObject);
-            Destroy(gameObject);
-        }
-    }
+    //void OnTriggerEnter(Collider collision)
+    //{
+    //    if (collision.CompareTag("Death"))
+    //    {
+    //        Debug.Log("Falling damage");
+    //        myGame.herbovores.Remove(gameObject);
+    //        Destroy(gameObject);
+    //    }
+    //}
 
     protected void FixedUpdate()
     {
@@ -124,6 +124,14 @@ public class BasicScript : MonoBehaviour
     {
         if (death)
             Instantiate(death, transform.position, Quaternion.identity);
+    }
+
+    protected void OnTriggerEnter(Collider other)
+    {
+        myGame.carnivores.Remove(gameObject);
+        myGame.herbovores.Remove(gameObject);
+        myGame.plants.Remove(gameObject);
+        Destroy(gameObject);
     }
 
 }

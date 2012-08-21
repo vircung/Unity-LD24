@@ -26,7 +26,7 @@ public class myGame : MonoBehaviour
     int btnSize = 30;
     int btnOff = 5;
     
-    public static bool debug = false;
+    public static bool debug = true;
 
     // Use this for initialization
     void Start()
